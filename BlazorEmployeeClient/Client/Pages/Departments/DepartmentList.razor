@@ -1,0 +1,45 @@
+﻿@page "/departmentList"
+@inherits DepartmentListBase
+
+
+    <div class="border">
+        <div class="card-header text-center">
+            <h1>List of Departments</h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Department ID</th>
+                        <th>Department Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Departments)
+                    {
+                        <tr>
+                            <td>@item.DepartmentID</td>
+                            <td>@item.DepartmentName</td>
+                            <td>
+                                <a class="btn btn-primary" style="font-weight: bold" href="@($"/departmentDetail/{item.DepartmentID}")">
+                                    <i class="oi oi-book">View</i>
+                                </a>
+                                <a class="btn btn-warning" style="font-weight: bold" href="@($"/editDepartment/{item.DepartmentID}")">
+                                    <i class="oi oi-pencil">Edit</i>
+                                </a>
+                                <a class="btn btn-danger" style="font-weight: bold" href="@($"/deleteDepartment/{item.DepartmentID}")">
+                                    <i class="oi oi-delete">Delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-outline-dark btn-block" href="addDepartment" style="font-weight: bold">Create Department</a>
+        </div>
+    </div>

@@ -1,0 +1,5 @@
+﻿@page "/editDepartment/{Id:int}"
+@inherits EditDepartmentBase
+
+<DepartmentForm Department="Department" UpsertDepartment="UpdateDepartment" CancelMethod="Cancel"
+                UpsertButton="Save" CancelButton="Cancel"/>

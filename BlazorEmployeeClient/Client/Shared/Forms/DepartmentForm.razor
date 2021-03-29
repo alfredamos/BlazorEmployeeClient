@@ -1,0 +1,41 @@
+﻿
+<div class="border">
+    <div class="card-header text-center">
+        <h1>Department Form</h1>
+    </div>
+    <div class="card-body">
+        <EditForm Model="Department">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label for="DepartmentName" class="form-label"> Department Name</label>
+                <InputText @bind-Value="Department.DepartmentName" class="form-control" placeholder="Department Name" />
+                <ValidationMessage For="@(() => Department.DepartmentName)" />
+            </div>
+
+        </EditForm>
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <button type="button" @onclick="UpsertDepartment" class="btn btn-outline-info btn-block" style="font-weight: bold">@UpsertButton</button>
+            <button type="button" @onclick="CancelMethod" class="btn btn-outline-dark btn-block" style="font-weight: bold">@CancelButton</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public DepartmentView Department { get; set; } = new DepartmentView();
+
+    [Parameter]
+    public EventCallback UpsertDepartment { get; set; }
+
+    [Parameter]
+    public EventCallback CancelMethod { get; set; }
+
+    [Parameter]
+    public string UpsertButton { get; set; }
+
+    [Parameter]
+    public string CancelButton { get; set; }
+}
