@@ -1,0 +1,30 @@
+﻿@using BlazorEmployeeClient.Shared.Models
+
+<table class="table table-striped, table-bordered">
+    <thead>
+        <tr>
+            <th>Department</th>
+            <th>Head Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in HeadCountsL)
+        {            
+            <tr>
+                @if (item.Count != 0)
+                {
+                    <td>@item.Department.DepartmentName</td>
+                    <td>@item.Count</td>
+                }
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+
+@code {
+    [Parameter]
+    public List<HeadCount> HeadCountsL { get; set; }
+}

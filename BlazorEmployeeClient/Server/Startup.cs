@@ -1,5 +1,6 @@
 using BlazorEmployeeClient.Server.Contracts;
 using BlazorEmployeeClient.Server.Data;
+using BlazorEmployeeClient.Server.Helpers;
 using BlazorEmployeeClient.Server.Mappings;
 using BlazorEmployeeClient.Server.Models;
 using BlazorEmployeeClient.Server.SQL;
@@ -51,12 +52,22 @@ namespace BlazorEmployeeClient.Server
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+           );
+
+
             services.AddRazorPages();
 
             services.AddScoped<IAddressRepository, SQLAddressRepository>();
             services.AddScoped<IDepartmentRepository, SQLDepartmentRepository>();
-            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();            
+            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
+            services.AddScoped<IStaffRepository, SQLStaffRepository>();
+
+            services.AddScoped<IFileStorageService, InAppStorageService>();
+
+            services.AddHttpContextAccessor();
+
 
             services.AddAutoMapper(typeof(Mapp));
 
@@ -83,6 +94,8 @@ namespace BlazorEmployeeClient.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();

@@ -1,0 +1,18 @@
+﻿@page "/employeeDetail/{Id:int}"
+@inherits EmployeeDetailBase
+
+
+<br />
+
+<HeadDiCounter HeadCounts="HeadCounts" />
+
+<br />
+
+
+<EmployeeInfo Employee="Employee" DeleteEmployee="DeleteClick" EditEmployee="EditEmployee" ViewAndListEmployee="BackToList"
+              ViewAndListButton="Back To List" /> 
+
+
+
+<ConfirmDelete @ref="DeleteConfirmation" ConfirmationChanged="DeleteEmployee" ConfirmationMessage="@($"Are you sure you want to delete {Employee.FullName} ?")"
+               ConfirmationTitle="Employee Delete Confirmation" />

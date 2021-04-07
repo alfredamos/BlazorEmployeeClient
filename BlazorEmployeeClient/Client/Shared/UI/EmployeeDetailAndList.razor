@@ -1,0 +1,28 @@
+﻿
+
+<div class="card m-3" style="min-width: 18rem; max-width: 30.5%">
+    <div class="card-header">
+        <h3>@Employee.FullName</h3>
+    </div>
+    <div class="card-body">
+        <img class="card-img-top" src="@Employee.PhotoPath" />
+    </div>
+    <div class="card-footer text-center">
+        <a class="btn btn-primary" type="button" href="@DetailOrListView" style="font-weight: bold">@ViewAndListButton</a>
+        <a class="btn btn-warning" href="@($"/editEmployee/{Employee.EmployeeID}")" style="font-weight: bold">Edit</a>
+        <a class="btn btn-danger" href="@($"/deleteEmployee/{Employee.EmployeeID}")" style="font-weight: bold">Delete</a>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public EmployeeView Employee { get; set; }
+    
+    [Parameter]
+    public string ViewAndListButton { get; set; }
+
+    [Parameter]
+    public string DetailOrListView { get; set; }
+
+}

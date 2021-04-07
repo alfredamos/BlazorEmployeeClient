@@ -12,9 +12,11 @@ namespace BlazorEmployeeClient.Client.Maping
     {
         public Maps()
         {
+            CreateMap<Abode, AbodeView>().ReverseMap();
             CreateMap<Address, AddressView>().ReverseMap();
             CreateMap<Department, DepartmentView>().ReverseMap();
             CreateMap<Employee, EmployeeView>().ReverseMap();
+            CreateMap<Staff, StaffView>().ReverseMap();
         }
     }
 }

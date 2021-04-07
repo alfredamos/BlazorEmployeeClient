@@ -1,0 +1,42 @@
+﻿
+
+
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>@Employee.FullName</h3>
+            </div>
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@Employee.PhotoPath" />
+                <h4>@Employee.Department</h4>
+                <h4>@Employee.Email</h4>
+            </div>
+            <div class="card-footer text-center">
+                <button class="btn btn-primary" type="button" @onclick="ViewAndListEmployee" style="font-weight: bold">@ViewAndListButton</button>
+                <button class="btn btn-warning" type="button" @onclick="EditEmployee" style="font-weight: bold">Edit</button>
+                <button class="btn btn-danger" type="button" @onclick="DeleteEmployee" style="font-weight: bold">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public EmployeeView Employee { get; set; }
+
+    [Parameter]
+    public EventCallback ViewAndListEmployee { get; set; }
+
+    [Parameter]
+    public EventCallback EditEmployee { get; set; }
+
+    [Parameter]
+    public EventCallback DeleteEmployee { get; set; }
+
+    [Parameter]
+    public string ViewAndListButton { get; set; }
+
+}

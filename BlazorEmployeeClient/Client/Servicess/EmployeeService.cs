@@ -43,6 +43,16 @@ namespace BlazorEmployeeClient.Client.Servicess
             return await _httpClient.GetJsonAsync<Employee[]>($"{_baseUrl}/search/{searchKey}");
         }
 
+        public async Task<IEnumerable<HeadCounter>> Searcher(Dept searchKey)
+        {            
+            return await _httpClient.GetJsonAsync<HeadCounter[]>($"{_baseUrl}/department/{searchKey}");
+        }
+
+        public async Task<IEnumerable<HeadCounter>> Searcher()
+        {
+            return await _httpClient.GetJsonAsync<HeadCounter[]>($"{_baseUrl}/dello");
+        }
+
         public async Task<Employee> UpdateEntity(Employee updatedEntity)
         {
             return await _httpClient.PutJsonAsync<Employee>($"{_baseUrl}/{updatedEntity.EmployeeID}", updatedEntity);

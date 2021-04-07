@@ -1,0 +1,30 @@
+﻿
+
+<table class="table table-striped, table-bordered">
+    <thead>
+        <tr>
+            <th>Department</th>
+            <th>Head Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in HeadCounts)
+        {
+            <tr>
+                @if (item.Count != 0)
+                {
+                    <td>@item.Department</td>
+                    <td>@item.Count</td>
+                }
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+
+@code {
+    [Parameter]
+    public List<HeadCounter> HeadCounts { get; set; }
+}

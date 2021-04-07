@@ -1,0 +1,20 @@
+﻿@page "/editEmployee/{Id:int}"
+@inherits EditEmployeeBase
+
+<div class="card-header text-center">
+    <h1>Edit Employee Details</h1>
+</div>
+
+@if (!ShowAddress)
+{
+    <EmployeeForm Employee="Employee" Departments="Departments" EnterAddress="InsertAddress"
+                  CancelMethod="Cancel" UpsertButton="Edit Employee Address" CancelButton="Cancel" />
+
+}
+
+@if (ShowAddress)
+{
+    <AddressForm Address="Address" UpsertEmployee="UpdateEmployee" CancelMethod="Cancel"
+                 UpsertButton="Save" CancelButton="Cancel" />
+
+}

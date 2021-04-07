@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace BlazorEmployeeClient.Server.Contracts
 {
     public interface IEmployeeRepository : IBaseRepository<Employee>
-    {
-        Task<IEnumerable<Employee>> Search(Department department);
-        Task<IEnumerable<Employee>> Search(Gender gender);
+    {               
+        Task<IEnumerable<HeadCounter>> DeptSearcher(Dept? searchKey = null);        
     }
 }

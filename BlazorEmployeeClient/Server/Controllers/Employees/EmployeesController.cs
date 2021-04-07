@@ -8,18 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using BlazorEmployeeClient.Server.Data;
 using BlazorEmployeeClient.Shared.Models;
 using BlazorEmployeeClient.Server.Contracts;
+using AutoMapper;
+using BlazorEmployeeClient.Server.Helpers;
 
 namespace BlazorEmployeeClient.Server.Controllers.Employees
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
-    {        
+    {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMapper _mapper;
+        private readonly IFileStorageService _fileStorageService;
 
-        public EmployeesController(IEmployeeRepository employeeRepository)
-        {           
+        public EmployeesController(IEmployeeRepository employeeRepository, IMapper mapper,
+                                   IFileStorageService filestorageService)
+        {
             _employeeRepository = employeeRepository;
+            _mapper = mapper;
+            _fileStorageService = filestorageService;
         }
 
         // GET: api/Employees
@@ -57,7 +64,7 @@ namespace BlazorEmployeeClient.Server.Controllers.Employees
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data");
             }
-            
+
         }
 
         // PUT: api/Employees/5
@@ -79,15 +86,23 @@ namespace BlazorEmployeeClient.Server.Controllers.Employees
                     return NotFound($"Employee with Id = {id} not found.");
                 }
 
-                return await _employeeRepository.UpdateEntity(employee);
+                if (!string.IsNullOrWhiteSpace(employee.PhotoPath))
+                {
+                    var employeePhoto = Convert.FromBase64String(employee.PhotoPath);
+                    employee.PhotoPath = await _fileStorageService.EditFile(employeePhoto, "jpg", "employee", employee.PhotoPath);
+                }
+
+                _mapper.Map(employee, employeeToUpdate);
+
+                return await _employeeRepository.UpdateEntity(employeeToUpdate);
             }
             catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data");
             }
-            
-            
+
+
         }
 
         // POST: api/Employees
@@ -102,6 +117,12 @@ namespace BlazorEmployeeClient.Server.Controllers.Employees
                     return BadRequest("Invalid input");
                 }
 
+                if (!string.IsNullOrWhiteSpace(employee.PhotoPath))
+                {
+                    var employeePhoto = Convert.FromBase64String(employee.PhotoPath);
+                    employee.PhotoPath = await _fileStorageService.SaveFile(employeePhoto, "jpg", "employee");
+                }
+
                 var createdEmployee = await _employeeRepository.AddEntity(employee);
 
                 return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.EmployeeID }, createdEmployee);
@@ -110,9 +131,9 @@ namespace BlazorEmployeeClient.Server.Controllers.Employees
             catch (Exception)
             {
 
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating data");
             }
-            
+
         }
 
         // DELETE: api/Employees/5
@@ -135,16 +156,30 @@ namespace BlazorEmployeeClient.Server.Controllers.Employees
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data");
             }
-          
+
         }
 
-        // GET: api/Employees/search/search
-        [HttpGet("search/{search}")]
-        public async Task<ActionResult<IEnumerable<Employee>>> Search(string search)
+        // GET: api/Employees/search/searchKey
+        [HttpGet("search/{searchKey}")]
+        public async Task<ActionResult<IEnumerable<Employee>>> Search(string searchKey)
+        {            
+            try
+            {                
+                return Ok(await _employeeRepository.Search(searchKey));
+            }
+            catch (Exception)
+            {                
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data");
+            }
+        }
+
+        // GET: api/Employees/department/search
+        [HttpGet("department/{search}")]
+        public async Task<ActionResult<IEnumerable<HeadCounter>>> Searcher(Dept? search)
         {
             try
             {
-                return Ok(await _employeeRepository.Search(search));
+                return Ok(await _employeeRepository.DeptSearcher(search));
             }
             catch (Exception)
             {
@@ -154,12 +189,12 @@ namespace BlazorEmployeeClient.Server.Controllers.Employees
         }
 
         // GET: api/Employees/department/search
-        [HttpGet("department/{search}")]
-        public async Task<ActionResult<IEnumerable<Employee>>> Search(Department search)
+        [HttpGet("dello")]
+        public async Task<ActionResult<IEnumerable<HeadCounter>>> Searchera()
         {
             try
             {
-                return Ok(await _employeeRepository.Search(search));
+                return Ok(await _employeeRepository.DeptSearcher());
             }
             catch (Exception)
             {
@@ -167,6 +202,6 @@ namespace BlazorEmployeeClient.Server.Controllers.Employees
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data");
             }
         }
-
+                   
     }
 }

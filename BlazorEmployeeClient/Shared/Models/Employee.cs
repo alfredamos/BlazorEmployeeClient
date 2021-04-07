@@ -13,11 +13,13 @@ namespace BlazorEmployeeClient.Shared.Models
         public string PhoneNumber { get; set; }
         public string Email { get; set; }       
         public string PhotoPath { get; set; }
+        public Dept Department { get; set; }
         public Gender Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public List<Address> Addresses { get; set; }
 
-        public int DepartmentID { get; set; }
-        public Department Department { get; set; }
+        //public int DepartmentRefID { get; set; }
+        //public Department Department { get; set; }
         
     }
 }

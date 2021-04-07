@@ -11,9 +11,11 @@ namespace BlazorEmployeeClient.Server.Mappings
     {
         public Mapp()
         {
-            CreateMap<Department, Department>();
+            CreateMap<Abode, Abode>();
+            CreateMap<Address, Address>();            
             CreateMap<Department, Department>();
             CreateMap<Employee, Employee>();
+            CreateMap<Staff, Staff>();
         }
     }
 }

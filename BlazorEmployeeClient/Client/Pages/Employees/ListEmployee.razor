@@ -1,0 +1,21 @@
+﻿@page "/listEmployees"
+@inherits ListEmployeeBase
+
+
+<br />
+
+<SearchItem OnSearchItem="HandleSearch" />
+
+<br />
+<HeadDiCounter HeadCounts="HeadCounts" />
+
+<br />
+    
+
+<div class="card-deck">
+    @foreach (var employee in Employees)
+    {
+        <EmployeeDetailAndList Employee="employee" DetailOrListView="@($"employeeDetail/{employee.EmployeeID}")"
+                               ViewAndListButton="View" />
+    }
+</div>

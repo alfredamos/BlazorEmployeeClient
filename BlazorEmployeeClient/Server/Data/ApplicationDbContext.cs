@@ -22,13 +22,17 @@ namespace BlazorEmployeeClient.Server.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new EmployeeEntityConfiguration());
             builder.ApplyConfiguration(new AddressEntityConfiguration());
+
+            //builder.Entity<Staff>().HasOne(x => x.Department).WithOne(x => x.Staff)
+            //        .HasForeignKey<Staff>("DepartmentID");
+
             base.OnModelCreating(builder);
         }
 
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
     }
 }

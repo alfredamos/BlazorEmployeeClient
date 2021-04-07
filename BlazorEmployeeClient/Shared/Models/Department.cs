@@ -10,6 +10,6 @@ namespace BlazorEmployeeClient.Shared.Models
     {
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
-        public Employee Employee { get; set; }
+        //public Staff Staff { get; set; }
     }
 }

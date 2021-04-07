@@ -1,0 +1,83 @@
+﻿@page "/employeeList"
+@inherits EmployeeListBase
+@using BlazorEmployeeClient.Client.Shared.UI 
+
+
+
+<br />
+
+<SearchItem OnSearchItem="HandleSearch"/>
+
+<br/>
+
+<HeadDiCounter HeadCounts="HeadCounts"/>
+
+<br/>
+
+@if (Employees == null)
+{
+    <div class="spinner"></div>
+}
+else
+{ 
+<div class="border">
+    <div class="card-header text-center">
+        <h1>List of Employees</h1>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Department</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Employees)
+                {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.Department</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Email</td>
+                    <td>@item.Gender</td>
+                    <td>
+                        <ul>
+                            @foreach (var itema in item.Addresses)
+                            {
+                                <li>@itema.Street</li>
+                                <li>@itema.City</li>
+                                <li>@itema.State</li>
+                                <li>@itema.Country</li>
+                                <li>@itema.PostCode</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" style="font-weight: bold" href="@($"/employeeDetail/{item.EmployeeID}")">
+                            <i class="oi oi-book">View</i>
+                        </a>
+                        <a class="btn btn-warning" style="font-weight: bold" href="@($"/editEmployee/{item.EmployeeID}")">
+                            <i class="oi oi-pencil">Edit</i>
+                        </a>
+                        <a class="btn btn-danger" style="font-weight: bold" href="@($"/deleteEmployee/{item.EmployeeID}")">
+                            <i class="oi oi-delete">Delete</i>
+                        </a>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-outline-dark btn-block" href="addEmployee" style="font-weight: bold">Create Employee</a>
+    </div>
+</div>
+}

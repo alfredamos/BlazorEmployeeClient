@@ -1,0 +1,40 @@
+﻿@page "/stafo"
+@inherits StafoBase
+
+
+<div class="container border p-3">
+    <div class="col-12 m-3">
+        <a class="btn btn-primary" style="width: 300px; margin: 0 auto;">
+            Create New          
+        </a>
+        <a class="btn btn-warning" style="width: 300px; margin: 0 auto;" >
+            Edit          
+        </a>
+        <a class="btn btn-danger" style="width: 300px; margin: 0 auto;">
+            Delete
+        </a>
+        
+    </div>
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>Department Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Departments)
+            {
+                <tr>
+                    <td>
+                        @item.DepartmentName
+                    </td>
+                    <td>
+                        <a class="btn btn-warning">Edit</a>
+                        <a class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -32,6 +32,7 @@ namespace BlazorEmployeeClient.Client
             builder.Services.AddScoped<IAddressService, AddressService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IStaffService, StaffService>();
 
             builder.Services.AddAutoMapper(typeof(Maps));
             

@@ -1,0 +1,71 @@
+﻿
+<div class="card-body">
+    <EditForm Model="Address">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="Street" class="form-label">Street</label>
+            <InputText @bind-Value="Address.Street" class="form-control" placeholder="Street" />
+            <ValidationMessage For="@(() => Address.Street)" />
+        </div>
+        <div class="form-group">
+            <label for="City" class="form-label">City</label>
+            <InputText @bind-Value="Address.City" class="form-control" placeholder="City" />
+            <ValidationMessage For="@(() => Address.City)" />
+        </div>
+        <div class="form-group">
+            <label for="State" class="form-label">State</label>
+            <InputText @bind-Value="Address.State" class="form-control" placeholder="City" />
+            <ValidationMessage For="@(() => Address.State)" />
+        </div>
+        <div class="form-group">
+            <label for="Country" class="form-label">Country</label>
+            <InputText @bind-Value="Address.Country" class="form-control" placeholder="Country" />
+            <ValidationMessage For="@(() => Address.Country)" />
+        </div>
+        <div class="form-group">
+            <label for="PostCode" class="form-label">Post Code</label>
+            <InputText @bind-Value="Address.PostCode" class="form-control" placeholder="PostCode" />
+            <ValidationMessage For="@(() => Address.PostCode)" />
+        </div>
+        <div class="form-group">
+            <label for="IsHomeAddress" class="form-label">IsHomeAddress</label>
+            <InputCheckbox @bind-Value="Address.IsHomeAddress" class="form-control" placeholder="IsHomeAddress" />
+            <ValidationMessage For="@(() => Address.IsHomeAddress)" />
+        </div>
+        <div class="form-group">
+            <label for="IsPostalAddress" class="form-label">IsPostalAddress</label>
+            <InputCheckbox @bind-Value="Address.IsPostalAddress" class="form-control" placeholder="IsPostalAddress" />
+            <ValidationMessage For="@(() => Address.IsPostalAddress)" />
+        </div>
+        <div class="form-group">
+            <label for="IsNextOfKinAddress" class="form-label">IsNextOfKinAddress</label>
+            <InputCheckbox @bind-Value="Address.IsNextOfKinAddress" class="form-control" placeholder="IsNextOfKinAddress" />
+            <ValidationMessage For="@(() => Address.IsNextOfKinAddress)" />
+        </div>
+    </EditForm>
+</div>
+<div class="card-footer">
+    <div class="form-group">
+        <button type="button" @onclick="UpsertEmployee" class="btn btn-outline-info btn-block" style="font-weight: bold">@UpsertButton</button>
+        <button type="button" @onclick="CancelMethod" class="btn btn-outline-dark btn-block" style="font-weight: bold">@CancelButton</button>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public AddressView Address { get; set; }
+
+    [Parameter]
+    public EventCallback UpsertEmployee { get; set; }
+
+    [Parameter]
+    public EventCallback CancelMethod { get; set; }
+
+    [Parameter]
+    public string UpsertButton { get; set; }
+
+    [Parameter]
+    public string CancelButton { get; set; }
+}

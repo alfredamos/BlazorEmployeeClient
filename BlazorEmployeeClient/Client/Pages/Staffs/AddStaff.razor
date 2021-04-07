@@ -1,0 +1,20 @@
+﻿@page "/addStaff"
+@inherits AddStaffBase
+
+<div class="card-header text-center">
+    <h1>Add Staff</h1>
+</div>
+
+@if (!ShowAddress)
+{
+    <StaffForm Staff="Staff" Departments="Departments" EnterAddress="InsertAddress"
+                  CancelMethod="Cancel" UpsertButton="Enter Staff Address" CancelButton="Cancel" />
+
+}
+
+@if (ShowAddress)
+{
+    <AbodeForm AddressL="Address" UpsertEmployee="CreateStaff" CancelMethod="Cancel"
+                 UpsertButton="Create" CancelButton="Cancel" />
+
+}

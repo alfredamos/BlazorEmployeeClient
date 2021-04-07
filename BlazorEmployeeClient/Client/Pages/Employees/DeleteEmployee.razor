@@ -1,0 +1,9 @@
+﻿@page "/deleteEmployee/{Id:int}"
+@inherits DeleteEmployeeBase
+
+
+<EmployeeInfo Employee="Employee" DeleteEmployee="DeleteClick" EditEmployee="EditEmployee" ViewAndListEmployee="BackToList"
+              ViewAndListButton="Back To List" />
+
+<ConfirmDelete @ref="DeleteConfirmation" ConfirmationChanged="DeleteEmployee" ConfirmationMessage="@($"Are you sure you want to delete {Employee.FullName} ?")"
+               ConfirmationTitle="Employee Delete Confirmation" />

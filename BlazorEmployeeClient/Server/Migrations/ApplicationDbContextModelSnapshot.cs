@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BlazorEmployeeClient.Server.Data.Migrations
+namespace BlazorEmployeeClient.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -84,6 +84,47 @@ namespace BlazorEmployeeClient.Server.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Abode", b =>
+                {
+                    b.Property<int>("AbodeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsHomeAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNextOfKinAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPostalAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StaffID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AbodeID");
+
+                    b.HasIndex("StaffID");
+
+                    b.ToTable("Abode");
+                });
+
             modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Address", b =>
                 {
                     b.Property<int>("AddressID")
@@ -99,6 +140,15 @@ namespace BlazorEmployeeClient.Server.Data.Migrations
 
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsHomeAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNextOfKinAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPostalAddress")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PostCode")
                         .HasColumnType("nvarchar(max)");
@@ -138,7 +188,10 @@ namespace BlazorEmployeeClient.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DepartmentID")
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Department")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -158,10 +211,42 @@ namespace BlazorEmployeeClient.Server.Data.Migrations
 
                     b.HasKey("EmployeeID");
 
-                    b.HasIndex("DepartmentID")
-                        .IsUnique();
-
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Staff", b =>
+                {
+                    b.Property<int>("StaffID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StaffID");
+
+                    b.HasIndex("DepartmentID");
+
+                    b.ToTable("Staffs");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -402,6 +487,17 @@ namespace BlazorEmployeeClient.Server.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Abode", b =>
+                {
+                    b.HasOne("BlazorEmployeeClient.Shared.Models.Staff", "Staff")
+                        .WithMany("Addresses")
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Staff");
+                });
+
             modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Address", b =>
                 {
                     b.HasOne("BlazorEmployeeClient.Shared.Models.Employee", "Employee")
@@ -413,11 +509,11 @@ namespace BlazorEmployeeClient.Server.Data.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Employee", b =>
+            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Staff", b =>
                 {
                     b.HasOne("BlazorEmployeeClient.Shared.Models.Department", "Department")
-                        .WithOne("Employee")
-                        .HasForeignKey("BlazorEmployeeClient.Shared.Models.Employee", "DepartmentID")
+                        .WithMany()
+                        .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -475,12 +571,12 @@ namespace BlazorEmployeeClient.Server.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Department", b =>
+            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Employee", b =>
                 {
-                    b.Navigation("Employee");
+                    b.Navigation("Addresses");
                 });
 
-            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Employee", b =>
+            modelBuilder.Entity("BlazorEmployeeClient.Shared.Models.Staff", b =>
                 {
                     b.Navigation("Addresses");
                 });
